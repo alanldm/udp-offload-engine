@@ -491,44 +491,44 @@ begin
     );
 
   -- RAW Ethernet
-  inst_uoe_raw_ethernet : uoe_raw_ethernet
-    generic map(
-      G_ACTIVE_RST  => G_ACTIVE_RST,
-      G_ASYNC_RST   => G_ASYNC_RST,
-      G_TDATA_WIDTH => G_UOE_TDATA_WIDTH
-    )
-    port map(
-      CLK            => CLK_UOE,
-      RST            => RST_UOE,
-      INIT_DONE      => INIT_DONE,
-      -- TX Path
-      S_TX_TDATA     => S_RAW_TX_TDATA,
-      S_TX_TVALID    => S_RAW_TX_TVALID,
-      S_TX_TLAST     => S_RAW_TX_TLAST,
-      S_TX_TKEEP     => S_RAW_TX_TKEEP,
-      S_TX_TID       => S_RAW_TX_TUSER,
-      S_TX_TREADY    => S_RAW_TX_TREADY,
-      M_TX_TDATA     => axis_raw_tx_tdata,
-      M_TX_TVALID    => axis_raw_tx_tvalid,
-      M_TX_TLAST     => axis_raw_tx_tlast,
-      M_TX_TKEEP     => axis_raw_tx_tkeep,
-      M_TX_TREADY    => axis_raw_tx_tready,
-      -- RX Path
-      S_RX_TDATA     => axis_raw_rx_tdata,
-      S_RX_TVALID    => axis_raw_rx_tvalid,
-      S_RX_TLAST     => axis_raw_rx_tlast,
-      S_RX_TKEEP     => axis_raw_rx_tkeep,
-      S_RX_TREADY    => axis_raw_rx_tready,
-      M_RX_TDATA     => M_RAW_RX_TDATA,
-      M_RX_TVALID    => M_RAW_RX_TVALID,
-      M_RX_TLAST     => M_RAW_RX_TLAST,
-      M_RX_TKEEP     => M_RAW_RX_TKEEP,
-      M_RX_TID       => M_RAW_RX_TUSER,
-      M_RX_TREADY    => M_RAW_RX_TREADY,
-      -- Registers
-      DEST_MAC_ADDR  => RAW_DEST_MAC_ADDR,
-      LOCAL_MAC_ADDR => LOCAL_MAC_ADDR
-    );
+--  inst_uoe_raw_ethernet : uoe_raw_ethernet
+--    generic map(
+--      G_ACTIVE_RST  => G_ACTIVE_RST,
+--      G_ASYNC_RST   => G_ASYNC_RST,
+--      G_TDATA_WIDTH => G_UOE_TDATA_WIDTH
+--    )
+--    port map(
+--      CLK            => CLK_UOE,
+--      RST            => RST_UOE,
+--      INIT_DONE      => INIT_DONE,
+--      -- TX Path
+--      S_TX_TDATA     => S_RAW_TX_TDATA,
+--      S_TX_TVALID    => S_RAW_TX_TVALID,
+--      S_TX_TLAST     => S_RAW_TX_TLAST,
+--      S_TX_TKEEP     => S_RAW_TX_TKEEP,
+--      S_TX_TID       => S_RAW_TX_TUSER,
+--      S_TX_TREADY    => S_RAW_TX_TREADY,
+--      M_TX_TDATA     => axis_raw_tx_tdata,
+--      M_TX_TVALID    => axis_raw_tx_tvalid,
+--      M_TX_TLAST     => axis_raw_tx_tlast,
+--      M_TX_TKEEP     => axis_raw_tx_tkeep,
+--      M_TX_TREADY    => axis_raw_tx_tready,
+--      -- RX Path
+--      S_RX_TDATA     => axis_raw_rx_tdata,
+--      S_RX_TVALID    => axis_raw_rx_tvalid,
+--      S_RX_TLAST     => axis_raw_rx_tlast,
+--      S_RX_TKEEP     => axis_raw_rx_tkeep,
+--      S_RX_TREADY    => axis_raw_rx_tready,
+--      M_RX_TDATA     => M_RAW_RX_TDATA,
+--      M_RX_TVALID    => M_RAW_RX_TVALID,
+--      M_RX_TLAST     => M_RAW_RX_TLAST,
+--      M_RX_TKEEP     => M_RAW_RX_TKEEP,
+--      M_RX_TID       => M_RAW_RX_TUSER,
+--      M_RX_TREADY    => M_RAW_RX_TREADY,
+--      -- Registers
+--      DEST_MAC_ADDR  => RAW_DEST_MAC_ADDR,
+--      LOCAL_MAC_ADDR => LOCAL_MAC_ADDR
+--    );
 
   -- MAC Shaping
   inst_uoe_mac_shaping : uoe_mac_shaping

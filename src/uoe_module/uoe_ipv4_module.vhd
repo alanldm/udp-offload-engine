@@ -142,29 +142,29 @@ architecture rtl of uoe_ipv4_module is
 begin
 
   -- Module IPV4 RX : Remove Header IP
-  inst_uoe_ipv4_module_rx : uoe_ipv4_module_rx
-    generic map(
-      G_ACTIVE_RST  => G_ACTIVE_RST,
-      G_ASYNC_RST   => G_ASYNC_RST,
-      G_TDATA_WIDTH => G_TDATA_WIDTH
-    )
-    port map(
-      CLK                       => CLK,
-      RST                       => RST,
-      S_TDATA                   => S_LINK_RX_TDATA,
-      S_TVALID                  => S_LINK_RX_TVALID,
-      S_TLAST                   => S_LINK_RX_TLAST,
-      S_TKEEP                   => S_LINK_RX_TKEEP,
-      S_TREADY                  => S_LINK_RX_TREADY,
-      M_TDATA                   => M_TRANSPORT_RX_TDATA,
-      M_TVALID                  => M_TRANSPORT_RX_TVALID,
-      M_TLAST                   => M_TRANSPORT_RX_TLAST,
-      M_TKEEP                   => M_TRANSPORT_RX_TKEEP,
-      M_TID                     => M_TRANSPORT_RX_TID,
-      M_TUSER                   => M_TRANSPORT_RX_TUSER,
-      M_TREADY                  => M_TRANSPORT_RX_TREADY,
-      IPV4_RX_FRAG_OFFSET_ERROR => IPV4_RX_FRAG_OFFSET_ERROR
-    );
+--  inst_uoe_ipv4_module_rx : uoe_ipv4_module_rx
+--    generic map(
+--      G_ACTIVE_RST  => G_ACTIVE_RST,
+--      G_ASYNC_RST   => G_ASYNC_RST,
+--      G_TDATA_WIDTH => G_TDATA_WIDTH
+--    )
+--    port map(
+--      CLK                       => CLK,
+--      RST                       => RST,
+--      S_TDATA                   => S_LINK_RX_TDATA,
+--      S_TVALID                  => S_LINK_RX_TVALID,
+--      S_TLAST                   => S_LINK_RX_TLAST,
+--      S_TKEEP                   => S_LINK_RX_TKEEP,
+--      S_TREADY                  => S_LINK_RX_TREADY,
+--      M_TDATA                   => M_TRANSPORT_RX_TDATA,
+--      M_TVALID                  => M_TRANSPORT_RX_TVALID,
+--      M_TLAST                   => M_TRANSPORT_RX_TLAST,
+--      M_TKEEP                   => M_TRANSPORT_RX_TKEEP,
+--      M_TID                     => M_TRANSPORT_RX_TID,
+--      M_TUSER                   => M_TRANSPORT_RX_TUSER,
+--      M_TREADY                  => M_TRANSPORT_RX_TREADY,
+--      IPV4_RX_FRAG_OFFSET_ERROR => IPV4_RX_FRAG_OFFSET_ERROR
+--    );
 
   -- Module IPV4 TX : Fragment frame in IPv4 packets with header
   inst_uoe_ipv4_module_tx : uoe_ipv4_module_tx
