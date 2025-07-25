@@ -84,7 +84,6 @@ end sfp_interfaces;
 
 architecture rtl of sfp_interfaces is
 
-    --constant C_CHANNEL_1 : integer := 0;
     constant C_CHANNEL_2 : integer := 1;
 
     -- Component declaration
