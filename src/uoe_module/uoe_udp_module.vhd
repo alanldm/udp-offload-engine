@@ -158,30 +158,4 @@ begin
       M_TREADY  => M_TX_TREADY
     );
   
-  -- Instance RX
---  inst_uoe_udp_module_rx : uoe_udp_module_rx
---    generic map(
---      G_ACTIVE_RST  => G_ACTIVE_RST,
---      G_ASYNC_RST   => G_ASYNC_RST,
---      G_TDATA_WIDTH => G_TDATA_WIDTH
---    )
---    port map(
---      CLK      => CLK,
---      RST      => RST,
---      S_TDATA  => S_RX_TDATA,
---      S_TVALID => S_RX_TVALID,
---      S_TLAST  => S_RX_TLAST,
---      S_TKEEP  => S_RX_TKEEP,
---      S_TUSER  => S_RX_TUSER,
---      S_TREADY => S_RX_TREADY,
---      M_TDATA  => M_RX_TDATA,
---      M_TVALID => M_RX_TVALID,
---      M_TLAST  => M_RX_TLAST,
---      M_TKEEP  => M_RX_TKEEP,
---      M_TUSER  => M_RX_TUSER,
---      M_TREADY => M_RX_TREADY
---    );
-  
-  
 end rtl;
-

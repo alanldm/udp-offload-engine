@@ -403,31 +403,5 @@ begin
       LOCAL_MAC_ADDR    => LOCAL_MAC_ADDR
     );
 
-  -------------------------------
-  -- RX PATH
-  -------------------------------
-
---  inst_uoe_mac_shaping_rx : component uoe_mac_shaping_rx
---    generic map(
---      G_ACTIVE_RST  => G_ACTIVE_RST,
---      G_ASYNC_RST   => G_ASYNC_RST,
---      G_TDATA_WIDTH => G_TDATA_WIDTH
---    )
---    port map(
---      CLK      => CLK,
---      RST      => RST,
---      S_TDATA  => S_RX_TDATA,
---      S_TVALID => S_RX_TVALID,
---      S_TLAST  => S_RX_TLAST,
---      S_TKEEP  => S_RX_TKEEP,
---      S_TREADY => S_RX_TREADY,
---      M_TDATA  => M_RX_TDATA,
---      M_TVALID => M_RX_TVALID,
---      M_TLAST  => M_RX_TLAST,
---      M_TKEEP  => M_RX_TKEEP,
---      M_TID    => M_RX_TID,
---      M_TREADY => M_RX_TREADY
---    );
-
 end rtl;
 
