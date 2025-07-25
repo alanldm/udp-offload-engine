@@ -285,7 +285,7 @@ architecture rtl of top_demo_uoe is
   constant C_IDX_MASTER_JTAG2AXI : integer := 0;
   constant C_IDX_MASTER_UART     : integer := 1;
 
-  constant C_IDX_SLAVE_UOE_10G   : integer := 0;
+  --constant C_IDX_SLAVE_UOE_10G   : integer := 0;
   constant C_IDX_SLAVE_UOE_1G    : integer := 1;
   constant C_IDX_SLAVE_MAIN_REGS : integer := 2;
 
@@ -335,19 +335,19 @@ architecture rtl of top_demo_uoe is
   signal axis_rx_1g_tlast  : std_logic;
   signal axis_rx_1g_tready : std_logic;
 
-  signal axis_rx_1g_64b_tdata  : std_logic_vector(63 downto 0);
-  signal axis_rx_1g_64b_tkeep  : std_logic_vector(7 downto 0);
-  signal axis_rx_1g_64b_tvalid : std_logic;
-  signal axis_rx_1g_64b_tuser  : std_logic_vector(31 downto 0);
-  signal axis_rx_1g_64b_tlast  : std_logic;
-  signal axis_rx_1g_64b_tready : std_logic;
+--  signal axis_rx_1g_64b_tdata  : std_logic_vector(63 downto 0);
+--  signal axis_rx_1g_64b_tkeep  : std_logic_vector(7 downto 0);
+--  signal axis_rx_1g_64b_tvalid : std_logic;
+--  signal axis_rx_1g_64b_tuser  : std_logic_vector(31 downto 0);
+--  signal axis_rx_1g_64b_tlast  : std_logic;
+--  signal axis_rx_1g_64b_tready : std_logic;
 
-  signal axis_tx_1g_64b_tdata  : std_logic_vector(63 downto 0);
-  signal axis_tx_1g_64b_tkeep  : std_logic_vector(7 downto 0);
-  signal axis_tx_1g_64b_tvalid : std_logic;
-  signal axis_tx_1g_64b_tlast  : std_logic;
-  signal axis_tx_1g_64b_tuser  : std_logic_vector(31 downto 0);
-  signal axis_tx_1g_64b_tready : std_logic;
+--  signal axis_tx_1g_64b_tdata  : std_logic_vector(63 downto 0);
+--  signal axis_tx_1g_64b_tkeep  : std_logic_vector(7 downto 0);
+--  signal axis_tx_1g_64b_tvalid : std_logic;
+--  signal axis_tx_1g_64b_tlast  : std_logic;
+--  signal axis_tx_1g_64b_tuser  : std_logic_vector(31 downto 0);
+--  signal axis_tx_1g_64b_tready : std_logic;
 
   signal axis_tx_1g_tdata  : std_logic_vector(31 downto 0);
   signal axis_tx_1g_tkeep  : std_logic_vector(3 downto 0);
@@ -357,19 +357,19 @@ architecture rtl of top_demo_uoe is
   signal axis_tx_1g_tready : std_logic;
 
   -- UDP UOE 10G
-  signal axis_rx_10g_tdata  : std_logic_vector(63 downto 0);
-  signal axis_rx_10g_tkeep  : std_logic_vector(7 downto 0);
-  signal axis_rx_10g_tvalid : std_logic;
-  signal axis_rx_10g_tuser  : std_logic_vector(79 downto 0);
-  signal axis_rx_10g_tlast  : std_logic;
-  signal axis_rx_10g_tready : std_logic;
+--  signal axis_rx_10g_tdata  : std_logic_vector(63 downto 0);
+--  signal axis_rx_10g_tkeep  : std_logic_vector(7 downto 0);
+--  signal axis_rx_10g_tvalid : std_logic;
+--  signal axis_rx_10g_tuser  : std_logic_vector(79 downto 0);
+--  signal axis_rx_10g_tlast  : std_logic;
+--  signal axis_rx_10g_tready : std_logic;
 
-  signal axis_tx_10g_tdata  : std_logic_vector(63 downto 0);
-  signal axis_tx_10g_tkeep  : std_logic_vector(7 downto 0);
-  signal axis_tx_10g_tvalid : std_logic;
-  signal axis_tx_10g_tlast  : std_logic;
-  signal axis_tx_10g_tuser  : std_logic_vector(79 downto 0);
-  signal axis_tx_10g_tready : std_logic;
+--  signal axis_tx_10g_tdata  : std_logic_vector(63 downto 0);
+--  signal axis_tx_10g_tkeep  : std_logic_vector(7 downto 0);
+--  signal axis_tx_10g_tvalid : std_logic;
+--  signal axis_tx_10g_tlast  : std_logic;
+--  signal axis_tx_10g_tuser  : std_logic_vector(79 downto 0);
+--  signal axis_tx_10g_tready : std_logic;
 
   -- PCS/PMA Debug
   signal sfp_mod_def0       : std_logic_vector(1 downto 0);
@@ -381,7 +381,7 @@ architecture rtl of top_demo_uoe is
 
   -- UOE Interrupt
   signal interrupt_1g  : std_logic_vector(1 downto 0);
-  signal interrupt_10g : std_logic_vector(1 downto 0);
+  --signal interrupt_10g : std_logic_vector(1 downto 0);
 
   -- Uart to bridge ascii
   signal uart_rx_sync : std_logic;
@@ -533,93 +533,93 @@ begin
   -- UOE 10G
   -------------------------------------------------------------------------------
 
-  inst_top_uoe_10g : component top_uoe
-    generic map(
-      G_ACTIVE_RST          => '1',
-      G_ASYNC_RST           => false,
-      G_ENABLE_ARP_MODULE   => true,
-      G_ENABLE_ARP_TABLE    => true,
-      G_ENABLE_TESTENV      => true,
-      G_ENABLE_PKT_DROP_EXT => true,
-      G_ENABLE_PKT_DROP_RAW => true,
-      G_ENABLE_PKT_DROP_UDP => true,
-      G_MAC_TDATA_WIDTH     => 64,
-      G_UOE_TDATA_WIDTH     => 64,
-      G_ROUTER_FIFO_DEPTH   => 8192,
-      G_UOE_FREQ_KHZ        => 200000
-    )
-    port map(
-      CLK_RX          => axis_rx_aclk(C_IDX_SLAVE_UOE_10G),
-      RST_RX          => axis_rx_rst(C_IDX_SLAVE_UOE_10G),
-      CLK_TX          => axis_tx_aclk(C_IDX_SLAVE_UOE_10G),
-      RST_TX          => axis_tx_rst(C_IDX_SLAVE_UOE_10G),
-      CLK_UOE         => sys_clk,
-      RST_UOE         => sys_rst,
-      PHY_LAYER_RDY   => phy_layer_ready(C_IDX_SLAVE_UOE_10G),
-      INTERRUPT       => interrupt_10g,
-      S_MAC_RX_TDATA  => axis_rx_tdata((C_IDX_SLAVE_UOE_10G * 64) + 63 downto (C_IDX_SLAVE_UOE_10G * 64)),
-      S_MAC_RX_TVALID => axis_rx_tvalid(C_IDX_SLAVE_UOE_10G),
-      S_MAC_RX_TLAST  => axis_rx_tlast(C_IDX_SLAVE_UOE_10G),
-      S_MAC_RX_TKEEP  => axis_rx_tkeep((C_IDX_SLAVE_UOE_10G * 8) + 7 downto (C_IDX_SLAVE_UOE_10G * 8)),
-      S_MAC_RX_TUSER  => axis_rx_tuser(C_IDX_SLAVE_UOE_10G),
-      M_MAC_TX_TDATA  => axis_tx_tdata((C_IDX_SLAVE_UOE_10G * 64) + 63 downto (C_IDX_SLAVE_UOE_10G * 64)),
-      M_MAC_TX_TVALID => axis_tx_tvalid(C_IDX_SLAVE_UOE_10G),
-      M_MAC_TX_TLAST  => axis_tx_tlast(C_IDX_SLAVE_UOE_10G),
-      M_MAC_TX_TKEEP  => axis_tx_tkeep((C_IDX_SLAVE_UOE_10G * 8) + 7 downto (C_IDX_SLAVE_UOE_10G * 8)),
-      M_MAC_TX_TUSER  => axis_tx_tuser(C_IDX_SLAVE_UOE_10G),
-      M_MAC_TX_TREADY => axis_tx_tready(C_IDX_SLAVE_UOE_10G),
-      S_EXT_TX_TDATA  => (others => '0'),
-      S_EXT_TX_TVALID => '0',
-      S_EXT_TX_TLAST  => '0',
-      S_EXT_TX_TKEEP  => (others => '0'),
-      S_EXT_TX_TREADY => open,
-      M_EXT_RX_TDATA  => open,
-      M_EXT_RX_TVALID => open,
-      M_EXT_RX_TLAST  => open,
-      M_EXT_RX_TKEEP  => open,
-      M_EXT_RX_TREADY => '1',
-      S_RAW_TX_TDATA  => (others => '0'),
-      S_RAW_TX_TVALID => '0',
-      S_RAW_TX_TLAST  => '0',
-      S_RAW_TX_TKEEP  => (others => '0'),
-      S_RAW_TX_TUSER  => (others => '0'),
-      S_RAW_TX_TREADY => open,
-      M_RAW_RX_TDATA  => open,
-      M_RAW_RX_TVALID => open,
-      M_RAW_RX_TLAST  => open,
-      M_RAW_RX_TKEEP  => open,
-      M_RAW_RX_TUSER  => open,
-      M_RAW_RX_TREADY => '1',
-      S_UDP_TX_TDATA  => axis_tx_10g_tdata,
-      S_UDP_TX_TVALID => axis_tx_10g_tvalid,
-      S_UDP_TX_TLAST  => axis_tx_10g_tlast,
-      S_UDP_TX_TKEEP  => axis_tx_10g_tkeep,
-      S_UDP_TX_TUSER  => axis_tx_10g_tuser,
-      S_UDP_TX_TREADY => axis_tx_10g_tready,
-      M_UDP_RX_TDATA  => axis_rx_10g_tdata,
-      M_UDP_RX_TVALID => axis_rx_10g_tvalid,
-      M_UDP_RX_TLAST  => axis_rx_10g_tlast,
-      M_UDP_RX_TKEEP  => axis_rx_10g_tkeep,
-      M_UDP_RX_TUSER  => axis_rx_10g_tuser,
-      M_UDP_RX_TREADY => axis_rx_10g_tready,
-      S_AXI_AWADDR    => axi_switch_out_awaddr((C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH) + 13 downto (C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH)),
-      S_AXI_AWVALID   => axi_switch_out_awvalid(C_IDX_SLAVE_UOE_10G),
-      S_AXI_AWREADY   => axi_switch_out_awready(C_IDX_SLAVE_UOE_10G),
-      S_AXI_WDATA     => axi_switch_out_wdata((C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH) + 31 downto (C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH)),
-      S_AXI_WVALID    => axi_switch_out_wvalid(C_IDX_SLAVE_UOE_10G),
-      S_AXI_WSTRB     => axi_switch_out_wstrb((C_IDX_SLAVE_UOE_10G * C_AXI_STRB_WIDTH) + 3 downto (C_IDX_SLAVE_UOE_10G * C_AXI_STRB_WIDTH)),
-      S_AXI_WREADY    => axi_switch_out_wready(C_IDX_SLAVE_UOE_10G),
-      S_AXI_BRESP     => axi_switch_out_bresp((C_IDX_SLAVE_UOE_10G * 2) + 1 downto (C_IDX_SLAVE_UOE_10G * 2)),
-      S_AXI_BVALID    => axi_switch_out_bvalid(C_IDX_SLAVE_UOE_10G),
-      S_AXI_BREADY    => axi_switch_out_bready(C_IDX_SLAVE_UOE_10G),
-      S_AXI_ARADDR    => axi_switch_out_araddr((C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH) + 13 downto (C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH)),
-      S_AXI_ARVALID   => axi_switch_out_arvalid(C_IDX_SLAVE_UOE_10G),
-      S_AXI_ARREADY   => axi_switch_out_arready(C_IDX_SLAVE_UOE_10G),
-      S_AXI_RDATA     => axi_switch_out_rdata((C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH) + 31 downto (C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH)),
-      S_AXI_RRESP     => axi_switch_out_rresp((C_IDX_SLAVE_UOE_10G * 2) + 1 downto (C_IDX_SLAVE_UOE_10G * 2)),
-      S_AXI_RVALID    => axi_switch_out_rvalid(C_IDX_SLAVE_UOE_10G),
-      S_AXI_RREADY    => axi_switch_out_rready(C_IDX_SLAVE_UOE_10G)
-    );
+--  inst_top_uoe_10g : component top_uoe
+--    generic map(
+--      G_ACTIVE_RST          => '1',
+--      G_ASYNC_RST           => false,
+--      G_ENABLE_ARP_MODULE   => true,
+--      G_ENABLE_ARP_TABLE    => true,
+--      G_ENABLE_TESTENV      => true,
+--      G_ENABLE_PKT_DROP_EXT => true,
+--      G_ENABLE_PKT_DROP_RAW => true,
+--      G_ENABLE_PKT_DROP_UDP => true,
+--      G_MAC_TDATA_WIDTH     => 64,
+--      G_UOE_TDATA_WIDTH     => 64,
+--      G_ROUTER_FIFO_DEPTH   => 8192,
+--      G_UOE_FREQ_KHZ        => 200000
+--    )
+--    port map(
+--      CLK_RX          => axis_rx_aclk(C_IDX_SLAVE_UOE_10G),
+--      RST_RX          => axis_rx_rst(C_IDX_SLAVE_UOE_10G),
+--      CLK_TX          => axis_tx_aclk(C_IDX_SLAVE_UOE_10G),
+--      RST_TX          => axis_tx_rst(C_IDX_SLAVE_UOE_10G),
+--      CLK_UOE         => sys_clk,
+--      RST_UOE         => sys_rst,
+--      PHY_LAYER_RDY   => phy_layer_ready(C_IDX_SLAVE_UOE_10G),
+--      INTERRUPT       => interrupt_10g,
+--      S_MAC_RX_TDATA  => axis_rx_tdata((C_IDX_SLAVE_UOE_10G * 64) + 63 downto (C_IDX_SLAVE_UOE_10G * 64)),
+--      S_MAC_RX_TVALID => axis_rx_tvalid(C_IDX_SLAVE_UOE_10G),
+--      S_MAC_RX_TLAST  => axis_rx_tlast(C_IDX_SLAVE_UOE_10G),
+--      S_MAC_RX_TKEEP  => axis_rx_tkeep((C_IDX_SLAVE_UOE_10G * 8) + 7 downto (C_IDX_SLAVE_UOE_10G * 8)),
+--      S_MAC_RX_TUSER  => axis_rx_tuser(C_IDX_SLAVE_UOE_10G),
+--      M_MAC_TX_TDATA  => axis_tx_tdata((C_IDX_SLAVE_UOE_10G * 64) + 63 downto (C_IDX_SLAVE_UOE_10G * 64)),
+--      M_MAC_TX_TVALID => axis_tx_tvalid(C_IDX_SLAVE_UOE_10G),
+--      M_MAC_TX_TLAST  => axis_tx_tlast(C_IDX_SLAVE_UOE_10G),
+--      M_MAC_TX_TKEEP  => axis_tx_tkeep((C_IDX_SLAVE_UOE_10G * 8) + 7 downto (C_IDX_SLAVE_UOE_10G * 8)),
+--      M_MAC_TX_TUSER  => axis_tx_tuser(C_IDX_SLAVE_UOE_10G),
+--      M_MAC_TX_TREADY => axis_tx_tready(C_IDX_SLAVE_UOE_10G),
+--      S_EXT_TX_TDATA  => (others => '0'),
+--      S_EXT_TX_TVALID => '0',
+--      S_EXT_TX_TLAST  => '0',
+--      S_EXT_TX_TKEEP  => (others => '0'),
+--      S_EXT_TX_TREADY => open,
+--      M_EXT_RX_TDATA  => open,
+--      M_EXT_RX_TVALID => open,
+--      M_EXT_RX_TLAST  => open,
+--      M_EXT_RX_TKEEP  => open,
+--      M_EXT_RX_TREADY => '1',
+--      S_RAW_TX_TDATA  => (others => '0'),
+--      S_RAW_TX_TVALID => '0',
+--      S_RAW_TX_TLAST  => '0',
+--      S_RAW_TX_TKEEP  => (others => '0'),
+--      S_RAW_TX_TUSER  => (others => '0'),
+--      S_RAW_TX_TREADY => open,
+--      M_RAW_RX_TDATA  => open,
+--      M_RAW_RX_TVALID => open,
+--      M_RAW_RX_TLAST  => open,
+--      M_RAW_RX_TKEEP  => open,
+--      M_RAW_RX_TUSER  => open,
+--      M_RAW_RX_TREADY => '1',
+--      S_UDP_TX_TDATA  => axis_tx_10g_tdata,
+--      S_UDP_TX_TVALID => axis_tx_10g_tvalid,
+--      S_UDP_TX_TLAST  => axis_tx_10g_tlast,
+--      S_UDP_TX_TKEEP  => axis_tx_10g_tkeep,
+--      S_UDP_TX_TUSER  => axis_tx_10g_tuser,
+--      S_UDP_TX_TREADY => axis_tx_10g_tready,
+--      M_UDP_RX_TDATA  => axis_rx_10g_tdata,
+--      M_UDP_RX_TVALID => axis_rx_10g_tvalid,
+--      M_UDP_RX_TLAST  => axis_rx_10g_tlast,
+--      M_UDP_RX_TKEEP  => axis_rx_10g_tkeep,
+--      M_UDP_RX_TUSER  => axis_rx_10g_tuser,
+--      M_UDP_RX_TREADY => axis_rx_10g_tready,
+--      S_AXI_AWADDR    => axi_switch_out_awaddr((C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH) + 13 downto (C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH)),
+--      S_AXI_AWVALID   => axi_switch_out_awvalid(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_AWREADY   => axi_switch_out_awready(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_WDATA     => axi_switch_out_wdata((C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH) + 31 downto (C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH)),
+--      S_AXI_WVALID    => axi_switch_out_wvalid(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_WSTRB     => axi_switch_out_wstrb((C_IDX_SLAVE_UOE_10G * C_AXI_STRB_WIDTH) + 3 downto (C_IDX_SLAVE_UOE_10G * C_AXI_STRB_WIDTH)),
+--      S_AXI_WREADY    => axi_switch_out_wready(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_BRESP     => axi_switch_out_bresp((C_IDX_SLAVE_UOE_10G * 2) + 1 downto (C_IDX_SLAVE_UOE_10G * 2)),
+--      S_AXI_BVALID    => axi_switch_out_bvalid(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_BREADY    => axi_switch_out_bready(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_ARADDR    => axi_switch_out_araddr((C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH) + 13 downto (C_IDX_SLAVE_UOE_10G * C_AXI_ADDR_WIDTH)),
+--      S_AXI_ARVALID   => axi_switch_out_arvalid(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_ARREADY   => axi_switch_out_arready(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_RDATA     => axi_switch_out_rdata((C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH) + 31 downto (C_IDX_SLAVE_UOE_10G * C_AXI_DATA_WIDTH)),
+--      S_AXI_RRESP     => axi_switch_out_rresp((C_IDX_SLAVE_UOE_10G * 2) + 1 downto (C_IDX_SLAVE_UOE_10G * 2)),
+--      S_AXI_RVALID    => axi_switch_out_rvalid(C_IDX_SLAVE_UOE_10G),
+--      S_AXI_RREADY    => axi_switch_out_rready(C_IDX_SLAVE_UOE_10G)
+--    );
 
   -------------------------------------------------------------------------------
   -- UOE 1G
@@ -718,172 +718,172 @@ begin
   -------------------------------------------------------------------------------
 
   -- Resize bus
-  inst_axis_dwidth_converter_1g_to_10g : axis_dwidth_converter
-    generic map(
-      G_ACTIVE_RST    => '1',
-      G_ASYNC_RST     => false,
-      G_S_TDATA_WIDTH => 32,
-      G_M_TDATA_WIDTH => 64,
-      G_TUSER_WIDTH   => 32,
-      G_TID_WIDTH     => 1,
-      G_TDEST_WIDTH   => 1,
-      G_PIPELINE      => true,
-      G_LITTLE_ENDIAN => true
-    )
-    port map(
-      CLK                   => sys_clk,
-      RST                   => sys_rst,
-      S_TDATA               => axis_rx_1g_tdata,
-      S_TVALID              => axis_rx_1g_tvalid,
-      S_TLAST               => axis_rx_1g_tlast,
-      S_TUSER(15 downto 0)  => axis_rx_1g_tuser(47 downto 32), -- Size
-      S_TUSER(31 downto 16) => axis_rx_1g_tuser(79 downto 64), -- Port Dest
-      S_TSTRB               => (others => '-'),
-      S_TKEEP               => axis_rx_1g_tkeep,
-      S_TID                 => (others => '-'),
-      S_TDEST               => (others => '-'),
-      S_TREADY              => axis_rx_1g_tready,
-      M_TDATA               => axis_rx_1g_64b_tdata,
-      M_TVALID              => axis_rx_1g_64b_tvalid,
-      M_TLAST               => axis_rx_1g_64b_tlast,
-      M_TUSER               => axis_rx_1g_64b_tuser,
-      M_TSTRB               => open,
-      M_TKEEP               => axis_rx_1g_64b_tkeep,
-      M_TID                 => open,
-      M_TDEST               => open,
-      M_TREADY              => axis_rx_1g_64b_tready,
-      ERR                   => open
-    );
+--  inst_axis_dwidth_converter_1g_to_10g : axis_dwidth_converter
+--    generic map(
+--      G_ACTIVE_RST    => '1',
+--      G_ASYNC_RST     => false,
+--      G_S_TDATA_WIDTH => 32,
+--      G_M_TDATA_WIDTH => 64,
+--      G_TUSER_WIDTH   => 32,
+--      G_TID_WIDTH     => 1,
+--      G_TDEST_WIDTH   => 1,
+--      G_PIPELINE      => true,
+--      G_LITTLE_ENDIAN => true
+--    )
+--    port map(
+--      CLK                   => sys_clk,
+--      RST                   => sys_rst,
+--      S_TDATA               => axis_rx_1g_tdata,
+--      S_TVALID              => axis_rx_1g_tvalid,
+--      S_TLAST               => axis_rx_1g_tlast,
+--      S_TUSER(15 downto 0)  => axis_rx_1g_tuser(47 downto 32), -- Size
+--      S_TUSER(31 downto 16) => axis_rx_1g_tuser(79 downto 64), -- Port Dest
+--      S_TSTRB               => (others => '-'),
+--      S_TKEEP               => axis_rx_1g_tkeep,
+--      S_TID                 => (others => '-'),
+--      S_TDEST               => (others => '-'),
+--      S_TREADY              => axis_rx_1g_tready,
+--      M_TDATA               => axis_rx_1g_64b_tdata,
+--      M_TVALID              => axis_rx_1g_64b_tvalid,
+--      M_TLAST               => axis_rx_1g_64b_tlast,
+--      M_TUSER               => axis_rx_1g_64b_tuser,
+--      M_TSTRB               => open,
+--      M_TKEEP               => axis_rx_1g_64b_tkeep,
+--      M_TID                 => open,
+--      M_TDEST               => open,
+--      M_TREADY              => axis_rx_1g_64b_tready,
+--      ERR                   => open
+--    );
 
   -- CDC
-  inst_axis_fifo_cdc_1g_to_10g : axis_fifo
-    generic map(
-      G_COMMON_CLK  => true,
-      G_ADDR_WIDTH  => 9,
-      G_TDATA_WIDTH => 64,
-      G_TUSER_WIDTH => 32,
-      G_TID_WIDTH   => 1,
-      G_TDEST_WIDTH => 1,
-      G_PKT_WIDTH   => 9,
-      G_RAM_STYLE   => "AUTO",
-      G_ACTIVE_RST  => '1',
-      G_ASYNC_RST   => false,
-      G_SYNC_STAGE  => 2
-    )
-    port map(
-      S_CLK                 => sys_clk,
-      S_RST                 => sys_rst,
-      S_TDATA               => axis_rx_1g_64b_tdata,
-      S_TVALID              => axis_rx_1g_64b_tvalid,
-      S_TLAST               => axis_rx_1g_64b_tlast,
-      S_TUSER               => axis_rx_1g_64b_tuser,
-      S_TSTRB               => (others => '-'),
-      S_TKEEP               => axis_rx_1g_64b_tkeep,
-      S_TID                 => (others => '-'),
-      S_TDEST               => (others => '-'),
-      S_TREADY              => axis_rx_1g_64b_tready,
-      M_CLK                 => sys_clk,
-      M_TDATA               => axis_tx_10g_tdata,
-      M_TVALID              => axis_tx_10g_tvalid,
-      M_TLAST               => axis_tx_10g_tlast,
-      M_TUSER(15 downto 0)  => axis_tx_10g_tuser(47 downto 32), -- Size
-      M_TUSER(31 downto 16) => reg_uoe_10g_port_dest,
-      M_TSTRB               => open,
-      M_TKEEP               => axis_tx_10g_tkeep,
-      M_TID                 => open,
-      M_TDEST               => open,
-      M_TREADY              => axis_tx_10g_tready
-    );
+--  inst_axis_fifo_cdc_1g_to_10g : axis_fifo
+--    generic map(
+--      G_COMMON_CLK  => true,
+--      G_ADDR_WIDTH  => 9,
+--      G_TDATA_WIDTH => 64,
+--      G_TUSER_WIDTH => 32,
+--      G_TID_WIDTH   => 1,
+--      G_TDEST_WIDTH => 1,
+--      G_PKT_WIDTH   => 9,
+--      G_RAM_STYLE   => "AUTO",
+--      G_ACTIVE_RST  => '1',
+--      G_ASYNC_RST   => false,
+--      G_SYNC_STAGE  => 2
+--    )
+--    port map(
+--      S_CLK                 => sys_clk,
+--      S_RST                 => sys_rst,
+--      S_TDATA               => axis_rx_1g_64b_tdata,
+--      S_TVALID              => axis_rx_1g_64b_tvalid,
+--      S_TLAST               => axis_rx_1g_64b_tlast,
+--      S_TUSER               => axis_rx_1g_64b_tuser,
+--      S_TSTRB               => (others => '-'),
+--      S_TKEEP               => axis_rx_1g_64b_tkeep,
+--      S_TID                 => (others => '-'),
+--      S_TDEST               => (others => '-'),
+--      S_TREADY              => axis_rx_1g_64b_tready,
+--      M_CLK                 => sys_clk,
+--      M_TDATA               => axis_tx_10g_tdata,
+--      M_TVALID              => axis_tx_10g_tvalid,
+--      M_TLAST               => axis_tx_10g_tlast,
+--      M_TUSER(15 downto 0)  => axis_tx_10g_tuser(47 downto 32), -- Size
+--      M_TUSER(31 downto 16) => reg_uoe_10g_port_dest,
+--      M_TSTRB               => open,
+--      M_TKEEP               => axis_tx_10g_tkeep,
+--      M_TID                 => open,
+--      M_TDEST               => open,
+--      M_TREADY              => axis_tx_10g_tready
+--    );
 
-  axis_tx_10g_tuser(31 downto 0)  <= reg_uoe_10g_target_ip;
-  axis_tx_10g_tuser(63 downto 48) <= reg_uoe_10g_port_src;
-  axis_tx_10g_tuser(79 downto 64) <= std_logic_vector(unsigned(reg_uoe_10g_port_dest) + 100);
+--  axis_tx_10g_tuser(31 downto 0)  <= reg_uoe_10g_target_ip;
+--  axis_tx_10g_tuser(63 downto 48) <= reg_uoe_10g_port_src;
+--  axis_tx_10g_tuser(79 downto 64) <= std_logic_vector(unsigned(reg_uoe_10g_port_dest) + 100);
 
   -------------------------------------------------------------------------------
   -- Link 10G to 1G
   -------------------------------------------------------------------------------
 
   -- CDC
-  inst_axis_fifo_cdc_10g_to_1g : axis_fifo
-    generic map(
-      G_COMMON_CLK  => true,
-      G_ADDR_WIDTH  => 9,
-      G_TDATA_WIDTH => 64,
-      G_TUSER_WIDTH => 32,
-      G_TID_WIDTH   => 1,
-      G_TDEST_WIDTH => 1,
-      G_PKT_WIDTH   => 9,
-      G_RAM_STYLE   => "AUTO",
-      G_ACTIVE_RST  => '1',
-      G_ASYNC_RST   => false,
-      G_SYNC_STAGE  => 2
-    )
-    port map(
-      S_CLK                 => sys_clk,
-      S_RST                 => sys_rst,
-      S_TDATA               => axis_rx_10g_tdata,
-      S_TVALID              => axis_rx_10g_tvalid,
-      S_TLAST               => axis_rx_10g_tlast,
-      S_TUSER(15 downto 0)  => axis_rx_10g_tuser(47 downto 32),
-      S_TUSER(31 downto 16) => axis_rx_10g_tuser(79 downto 64),
-      S_TSTRB               => (others => '-'),
-      S_TKEEP               => axis_rx_10g_tkeep,
-      S_TID                 => (others => '-'),
-      S_TDEST               => (others => '-'),
-      S_TREADY              => axis_rx_10g_tready,
-      M_CLK                 => sys_clk,
-      M_TDATA               => axis_tx_1g_64b_tdata,
-      M_TVALID              => axis_tx_1g_64b_tvalid,
-      M_TLAST               => axis_tx_1g_64b_tlast,
-      M_TUSER               => axis_tx_1g_64b_tuser,
-      M_TSTRB               => open,
-      M_TKEEP               => axis_tx_1g_64b_tkeep,
-      M_TID                 => open,
-      M_TDEST               => open,
-      M_TREADY              => axis_tx_1g_64b_tready
-    );
+--  inst_axis_fifo_cdc_10g_to_1g : axis_fifo
+--    generic map(
+--      G_COMMON_CLK  => true,
+--      G_ADDR_WIDTH  => 9,
+--      G_TDATA_WIDTH => 64,
+--      G_TUSER_WIDTH => 32,
+--      G_TID_WIDTH   => 1,
+--      G_TDEST_WIDTH => 1,
+--      G_PKT_WIDTH   => 9,
+--      G_RAM_STYLE   => "AUTO",
+--      G_ACTIVE_RST  => '1',
+--      G_ASYNC_RST   => false,
+--      G_SYNC_STAGE  => 2
+--    )
+--    port map(
+--      S_CLK                 => sys_clk,
+--      S_RST                 => sys_rst,
+--      S_TDATA               => axis_rx_10g_tdata,
+--      S_TVALID              => axis_rx_10g_tvalid,
+--      S_TLAST               => axis_rx_10g_tlast,
+--      S_TUSER(15 downto 0)  => axis_rx_10g_tuser(47 downto 32),
+--      S_TUSER(31 downto 16) => axis_rx_10g_tuser(79 downto 64),
+--      S_TSTRB               => (others => '-'),
+--      S_TKEEP               => axis_rx_10g_tkeep,
+--      S_TID                 => (others => '-'),
+--      S_TDEST               => (others => '-'),
+--      S_TREADY              => axis_rx_10g_tready,
+--      M_CLK                 => sys_clk,
+--      M_TDATA               => axis_tx_1g_64b_tdata,
+--      M_TVALID              => axis_tx_1g_64b_tvalid,
+--      M_TLAST               => axis_tx_1g_64b_tlast,
+--      M_TUSER               => axis_tx_1g_64b_tuser,
+--      M_TSTRB               => open,
+--      M_TKEEP               => axis_tx_1g_64b_tkeep,
+--      M_TID                 => open,
+--      M_TDEST               => open,
+--      M_TREADY              => axis_tx_1g_64b_tready
+--    );
 
   -- Resize bus
-  inst_axis_dwidth_converter_ch2 : axis_dwidth_converter
-    generic map(
-      G_ACTIVE_RST    => '1',
-      G_ASYNC_RST     => false,
-      G_S_TDATA_WIDTH => 64,
-      G_M_TDATA_WIDTH => 32,
-      G_TUSER_WIDTH   => 32,
-      G_TID_WIDTH     => 1,
-      G_TDEST_WIDTH   => 1,
-      G_PIPELINE      => true,
-      G_LITTLE_ENDIAN => true
-    )
-    port map(
-      CLK                   => sys_clk,
-      RST                   => sys_rst,
-      S_TDATA               => axis_tx_1g_64b_tdata,
-      S_TVALID              => axis_tx_1g_64b_tvalid,
-      S_TLAST               => axis_tx_1g_64b_tlast,
-      S_TUSER               => axis_tx_1g_64b_tuser,
-      S_TSTRB               => (others => '-'),
-      S_TKEEP               => axis_tx_1g_64b_tkeep,
-      S_TID                 => (others => '-'),
-      S_TDEST               => (others => '-'),
-      S_TREADY              => axis_tx_1g_64b_tready,
-      M_TDATA               => axis_tx_1g_tdata,
-      M_TVALID              => axis_tx_1g_tvalid,
-      M_TLAST               => axis_tx_1g_tlast,
-      M_TUSER(15 downto 0)  => axis_tx_1g_tuser(47 downto 32),
-      M_TUSER(31 downto 16) => reg_uoe_1g_port_dest,
-      M_TSTRB               => open,
-      M_TKEEP               => axis_tx_1g_tkeep,
-      M_TID                 => open,
-      M_TDEST               => open,
-      M_TREADY              => axis_tx_1g_tready,
-      ERR                   => open
-    );
+--  inst_axis_dwidth_converter_ch2 : axis_dwidth_converter
+--    generic map(
+--      G_ACTIVE_RST    => '1',
+--      G_ASYNC_RST     => false,
+--      G_S_TDATA_WIDTH => 64,
+--      G_M_TDATA_WIDTH => 32,
+--      G_TUSER_WIDTH   => 32,
+--      G_TID_WIDTH     => 1,
+--      G_TDEST_WIDTH   => 1,
+--      G_PIPELINE      => true,
+--      G_LITTLE_ENDIAN => true
+--    )
+--    port map(
+--      CLK                   => sys_clk,
+--      RST                   => sys_rst,
+--      S_TDATA               => axis_tx_1g_64b_tdata,
+--      S_TVALID              => axis_tx_1g_64b_tvalid,
+--      S_TLAST               => axis_tx_1g_64b_tlast,
+--      S_TUSER               => axis_tx_1g_64b_tuser,
+--      S_TSTRB               => (others => '-'),
+--      S_TKEEP               => axis_tx_1g_64b_tkeep,
+--      S_TID                 => (others => '-'),
+--      S_TDEST               => (others => '-'),
+--      S_TREADY              => axis_tx_1g_64b_tready,
+--      M_TDATA               => axis_tx_1g_tdata,
+--      M_TVALID              => axis_tx_1g_tvalid,
+--      M_TLAST               => axis_tx_1g_tlast,
+--      M_TUSER(15 downto 0)  => axis_tx_1g_tuser(47 downto 32),
+--      M_TUSER(31 downto 16) => reg_uoe_1g_port_dest,
+--      M_TSTRB               => open,
+--      M_TKEEP               => axis_tx_1g_tkeep,
+--      M_TID                 => open,
+--      M_TDEST               => open,
+--      M_TREADY              => axis_tx_1g_tready,
+--      ERR                   => open
+--    );
 
-  axis_tx_1g_tuser(31 downto 0)  <= reg_uoe_1g_target_ip;
-  axis_tx_1g_tuser(63 downto 48) <= reg_uoe_1g_port_src;
-  axis_tx_1g_tuser(79 downto 64) <= std_logic_vector(unsigned(reg_uoe_1g_port_dest) + 100);
+--  axis_tx_1g_tuser(31 downto 0)  <= reg_uoe_1g_target_ip;
+--  axis_tx_1g_tuser(63 downto 48) <= reg_uoe_1g_port_src;
+--  axis_tx_1g_tuser(79 downto 64) <= std_logic_vector(unsigned(reg_uoe_1g_port_dest) + 100);
 
   -------------------------------------------------------------------------------
   -- JTAG2AXI
@@ -1123,7 +1123,7 @@ begin
   dbg_loopback_en <= GPIO_DIP_SW(0);
   sfp_mod_def0    <= GPIO_DIP_SW(2 downto 1);
 
-  GPIO_LED(1 downto 0) <= interrupt_1g or interrupt_10g; --dbg_clk_phy_active;
+  GPIO_LED(1 downto 0) <= interrupt_1g;-- or interrupt_10g; --dbg_clk_phy_active;
   GPIO_LED(3 downto 2) <= phy_layer_ready;
   GPIO_LED(5 downto 4) <= sfp_mod_def0 or SFP_LOS;
   GPIO_LED(6)          <= dbg_loopback_en;
