@@ -170,30 +170,6 @@ architecture rtl of uoe_mac_shaping is
     );
   end component uoe_mac_shaping_tx;
 
-  -- MAC Shaping RX
---  component uoe_mac_shaping_rx is
---    generic(
---      G_ACTIVE_RST  : std_logic := '0';
---      G_ASYNC_RST   : boolean   := true;
---      G_TDATA_WIDTH : positive  := 64
---    );
---    port(
---      CLK      : in  std_logic;
---      RST      : in  std_logic;
---      S_TDATA  : in  std_logic_vector(G_TDATA_WIDTH - 1 downto 0);
---      S_TVALID : in  std_logic;
---      S_TLAST  : in  std_logic;
---      S_TKEEP  : in  std_logic_vector(((G_TDATA_WIDTH + 7) / 8) - 1 downto 0);
---      S_TREADY : out std_logic;
---      M_TDATA  : out std_logic_vector(G_TDATA_WIDTH - 1 downto 0);
---      M_TVALID : out std_logic;
---      M_TLAST  : out std_logic;
---      M_TKEEP  : out std_logic_vector(((G_TDATA_WIDTH + 7) / 8) - 1 downto 0);
---      M_TID    : out std_logic_vector(15 downto 0);
---      M_TREADY : in  std_logic
---    );
---  end component uoe_mac_shaping_rx;
-
   -------------------------------
   -- Signals declaration
   -------------------------------

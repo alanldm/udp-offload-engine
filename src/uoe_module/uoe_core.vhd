@@ -1118,4 +1118,3 @@ begin
   end process P_FLAG_COUNTER;
 
 end rtl;
-

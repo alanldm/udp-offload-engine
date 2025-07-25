@@ -477,29 +477,6 @@ begin
     -- Components declaration
     ----------------------------------
 
-    component axis_rate_meter is
-      generic(
-        G_ACTIVE_RST  : std_logic := '0';
-        G_ASYNC_RST   : boolean   := false;
-        G_TKEEP_WIDTH : positive  := 1;
-        G_CNT_WIDTH   : positive  := 32
-      );
-      port(
-        CLK                : in  std_logic;
-        RST                : in  std_logic;
-        AXIS_TKEEP         : in  std_logic_vector(G_TKEEP_WIDTH - 1 downto 0);
-        AXIS_TVALID        : in  std_logic;
-        AXIS_TREADY        : in  std_logic;
-        TRIG_TVALID        : in  std_logic;
-        TRIG_TDATA_INIT    : in  std_logic;
-        TRIG_TDATA_BYTES   : in  std_logic_vector((G_CNT_WIDTH + integer(ceil(log2(real(G_TKEEP_WIDTH))))) - 1 downto 0);
-        CNT_TDATA_BYTES    : out std_logic_vector((G_CNT_WIDTH + integer(ceil(log2(real(G_TKEEP_WIDTH))))) - 1 downto 0);
-        CNT_TDATA_CYCLES   : out std_logic_vector(G_CNT_WIDTH - 1 downto 0);
-        CNT_TUSER_OVERFLOW : out std_logic;
-        CNT_TVALID         : out std_logic
-      );
-    end component axis_rate_meter;
-
     component uoe_integrated_tests_mac is
       generic(
         G_ACTIVE_RST      : std_logic := '0';

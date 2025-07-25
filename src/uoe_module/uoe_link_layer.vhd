@@ -251,44 +251,6 @@ architecture rtl of uoe_link_layer is
     );
   end component uoe_frame_router;
 
-  -- RAW Ethernet
---  component uoe_raw_ethernet is
---    generic(
---      G_ACTIVE_RST  : std_logic := '0';
---      G_ASYNC_RST   : boolean   := true;
---      G_TDATA_WIDTH : positive  := 64
---    );
---    port(
---      CLK            : in  std_logic;
---      RST            : in  std_logic;
---      INIT_DONE      : in  std_logic;
---      S_TX_TDATA     : in  std_logic_vector(G_TDATA_WIDTH - 1 downto 0);
---      S_TX_TVALID    : in  std_logic;
---      S_TX_TLAST     : in  std_logic;
---      S_TX_TKEEP     : in  std_logic_vector(((G_TDATA_WIDTH + 7) / 8) - 1 downto 0);
---      S_TX_TID       : in  std_logic_vector(15 downto 0);
---      S_TX_TREADY    : out std_logic;
---      M_TX_TDATA     : out std_logic_vector(G_TDATA_WIDTH - 1 downto 0);
---      M_TX_TVALID    : out std_logic;
---      M_TX_TLAST     : out std_logic;
---      M_TX_TKEEP     : out std_logic_vector(((G_TDATA_WIDTH + 7) / 8) - 1 downto 0);
---      M_TX_TREADY    : in  std_logic;
---      S_RX_TDATA     : in  std_logic_vector(G_TDATA_WIDTH - 1 downto 0);
---      S_RX_TVALID    : in  std_logic;
---      S_RX_TLAST     : in  std_logic;
---      S_RX_TKEEP     : in  std_logic_vector(((G_TDATA_WIDTH + 7) / 8) - 1 downto 0);
---      S_RX_TREADY    : out std_logic;
---      M_RX_TDATA     : out std_logic_vector(G_TDATA_WIDTH - 1 downto 0);
---      M_RX_TVALID    : out std_logic;
---      M_RX_TLAST     : out std_logic;
---      M_RX_TKEEP     : out std_logic_vector(((G_TDATA_WIDTH + 7) / 8) - 1 downto 0);
---      M_RX_TID       : out std_logic_vector(15 downto 0);
---      M_RX_TREADY    : in  std_logic;
---      DEST_MAC_ADDR  : in  std_logic_vector(47 downto 0);
---      LOCAL_MAC_ADDR : in  std_logic_vector(47 downto 0)
---    );
---  end component uoe_raw_ethernet;
-
   component uoe_mac_shaping is
     generic(
       G_ENABLE_ARP_TABLE : boolean   := false;
