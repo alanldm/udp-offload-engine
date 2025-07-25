@@ -35,24 +35,14 @@ set_property IOSTANDARD LVDS [get_ports CLK_125_N]
 set_property PACKAGE_PIN P6 [get_ports SFP_REFCLK_P]
 set_property PACKAGE_PIN P5 [get_ports SFP_REFCLK_N]
 
-#SFP 1
-set_property PACKAGE_PIN U4 [get_ports SFP_TX_P[0]]
-set_property PACKAGE_PIN U3 [get_ports SFP_TX_N[0]]
-set_property PACKAGE_PIN T2 [get_ports SFP_RX_P[0]]
-set_property PACKAGE_PIN T1 [get_ports SFP_RX_N[0]]
-
-set_property PACKAGE_PIN K21     [get_ports SFP_LOS[0]]
-set_property IOSTANDARD LVCMOS18 [get_ports SFP_LOS[0]]
-
-
 # SFP 2
-set_property PACKAGE_PIN W4 [get_ports SFP_TX_P[1]]
-set_property PACKAGE_PIN W3 [get_ports SFP_TX_N[1]]
-set_property PACKAGE_PIN V2 [get_ports SFP_RX_P[1]]
-set_property PACKAGE_PIN V1 [get_ports SFP_RX_N[1]]
+set_property PACKAGE_PIN W4 [get_ports SFP_TX_P]
+set_property PACKAGE_PIN W3 [get_ports SFP_TX_N]
+set_property PACKAGE_PIN V2 [get_ports SFP_RX_P]
+set_property PACKAGE_PIN V1 [get_ports SFP_RX_N]
 
-set_property PACKAGE_PIN AM9     [get_ports SFP_LOS[1]]
-set_property IOSTANDARD LVCMOS18 [get_ports SFP_LOS[1]]
+set_property PACKAGE_PIN AM9     [get_ports SFP_LOS]
+set_property IOSTANDARD LVCMOS18 [get_ports SFP_LOS]
 
 # GPIO Button for reset
 set_property PACKAGE_PIN AE10    [get_ports CPU_RESET]
