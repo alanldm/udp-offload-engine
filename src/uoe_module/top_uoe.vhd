@@ -789,54 +789,54 @@ begin
       );
 
     -- TX Rate Meter
-    inst_axis_rate_meter_tx : axis_rate_meter
-      generic map(
-        G_ACTIVE_RST    => G_ACTIVE_RST,
-        G_ASYNC_RST     => G_ASYNC_RST,
-        G_TKEEP_WIDTH   => C_UOE_TKEEP_WIDTH,
-        G_CNT_WIDTH     => C_RM_CNT_WIDTH - integer(ceil(log2(real(C_UOE_TKEEP_WIDTH))))
-      )
-      port map(
-        CLK                => CLK_UOE,
-        RST                => RST_UOE,
-        AXIS_TKEEP         => axis_udp_tx_tkeep,
-        AXIS_TVALID        => axis_udp_tx_tvalid,
-        AXIS_TREADY        => axis_udp_tx_tready,
-        TRIG_TVALID        => reg_tx_rate_meter_trigger_p,
-        TRIG_TDATA_INIT    => reg_tx_rate_meter_init_counter,
-        TRIG_TDATA_BYTES   => reg_tx_rate_meter_bytes_expected,
-        CNT_TDATA_BYTES    => st_tx_rate_meter_cnt_bytes,
-        CNT_TDATA_CYCLES   => st_tx_rate_meter_cnt_cycles_i,
-        CNT_TUSER_OVERFLOW => irq_tx_rate_meter_overflow,
-        CNT_TVALID         => irq_tx_rate_meter_done
-      );
+--    inst_axis_rate_meter_tx : axis_rate_meter
+--      generic map(
+--        G_ACTIVE_RST    => G_ACTIVE_RST,
+--        G_ASYNC_RST     => G_ASYNC_RST,
+--        G_TKEEP_WIDTH   => C_UOE_TKEEP_WIDTH,
+--        G_CNT_WIDTH     => C_RM_CNT_WIDTH - integer(ceil(log2(real(C_UOE_TKEEP_WIDTH))))
+--      )
+--      port map(
+--        CLK                => CLK_UOE,
+--        RST                => RST_UOE,
+--        AXIS_TKEEP         => axis_udp_tx_tkeep,
+--        AXIS_TVALID        => axis_udp_tx_tvalid,
+--        AXIS_TREADY        => axis_udp_tx_tready,
+--        TRIG_TVALID        => reg_tx_rate_meter_trigger_p,
+--        TRIG_TDATA_INIT    => reg_tx_rate_meter_init_counter,
+--        TRIG_TDATA_BYTES   => reg_tx_rate_meter_bytes_expected,
+--        CNT_TDATA_BYTES    => st_tx_rate_meter_cnt_bytes,
+--        CNT_TDATA_CYCLES   => st_tx_rate_meter_cnt_cycles_i,
+--        CNT_TUSER_OVERFLOW => irq_tx_rate_meter_overflow,
+--        CNT_TVALID         => irq_tx_rate_meter_done
+--      );
 
-    st_tx_rate_meter_cnt_cycles <= std_logic_vector(resize(unsigned(st_tx_rate_meter_cnt_cycles_i),64));
+--    st_tx_rate_meter_cnt_cycles <= std_logic_vector(resize(unsigned(st_tx_rate_meter_cnt_cycles_i),64));
 
     -- RX Rate Meter
-    inst_axis_rate_meter_rx : axis_rate_meter
-      generic map(
-        G_ACTIVE_RST    => G_ACTIVE_RST,
-        G_ASYNC_RST     => G_ASYNC_RST,
-        G_TKEEP_WIDTH   => C_UOE_TKEEP_WIDTH,
-        G_CNT_WIDTH     => C_RM_CNT_WIDTH - integer(ceil(log2(real(C_UOE_TKEEP_WIDTH))))
-      )
-      port map(
-        CLK                => CLK_UOE,
-        RST                => RST_UOE,
-        AXIS_TKEEP         => axis_udp_rx_tkeep,
-        AXIS_TVALID        => axis_udp_rx_tvalid,
-        AXIS_TREADY        => axis_udp_rx_tready,
-        TRIG_TVALID        => reg_rx_rate_meter_trigger_p,
-        TRIG_TDATA_INIT    => reg_rx_rate_meter_init_counter,
-        TRIG_TDATA_BYTES   => reg_rx_rate_meter_bytes_expected,
-        CNT_TDATA_BYTES    => st_rx_rate_meter_cnt_bytes,
-        CNT_TDATA_CYCLES   => st_rx_rate_meter_cnt_cycles_i,
-        CNT_TUSER_OVERFLOW => irq_rx_rate_meter_overflow,
-        CNT_TVALID         => irq_rx_rate_meter_done
-      );
+--    inst_axis_rate_meter_rx : axis_rate_meter
+--      generic map(
+--        G_ACTIVE_RST    => G_ACTIVE_RST,
+--        G_ASYNC_RST     => G_ASYNC_RST,
+--        G_TKEEP_WIDTH   => C_UOE_TKEEP_WIDTH,
+--        G_CNT_WIDTH     => C_RM_CNT_WIDTH - integer(ceil(log2(real(C_UOE_TKEEP_WIDTH))))
+--      )
+--      port map(
+--        CLK                => CLK_UOE,
+--        RST                => RST_UOE,
+--        AXIS_TKEEP         => axis_udp_rx_tkeep,
+--        AXIS_TVALID        => axis_udp_rx_tvalid,
+--        AXIS_TREADY        => axis_udp_rx_tready,
+--        TRIG_TVALID        => reg_rx_rate_meter_trigger_p,
+--        TRIG_TDATA_INIT    => reg_rx_rate_meter_init_counter,
+--        TRIG_TDATA_BYTES   => reg_rx_rate_meter_bytes_expected,
+--        CNT_TDATA_BYTES    => st_rx_rate_meter_cnt_bytes,
+--        CNT_TDATA_CYCLES   => st_rx_rate_meter_cnt_cycles_i,
+--        CNT_TUSER_OVERFLOW => irq_rx_rate_meter_overflow,
+--        CNT_TVALID         => irq_rx_rate_meter_done
+--      );
 
-    st_rx_rate_meter_cnt_cycles <= std_logic_vector(resize(unsigned(st_rx_rate_meter_cnt_cycles_i),64));
+--    st_rx_rate_meter_cnt_cycles <= std_logic_vector(resize(unsigned(st_rx_rate_meter_cnt_cycles_i),64));
 
     -- Integrated test on UDP interface
     inst_uoe_integrated_tests_udp : uoe_integrated_tests_udp
