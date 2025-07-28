@@ -1,21 +1,3 @@
-# Copyright (c) 2022-2024 THALES. All Rights Reserved
-#
-# Licensed under the SolderPad Hardware License v 2.1 (the "License");
-# you may not use this file except in compliance with the License, or,
-# at your option. You may obtain a copy of the License at
-#
-# https://solderpad.org/licenses/SHL-2.1/
-#
-# Unless required by applicable law or agreed to in writing, any
-# work distributed under the License is distributed on an "AS IS"
-# BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-# either express or implied. See the License for the specific
-# language governing permissions and limitations under the
-# License.
-#
-# File subject to timestamp TSP22X5365 Thales, in the name of Thales SIX GTS France, made on 10/06/2022.
-#
-
 #clock creation section
 
 # 125 MHz global ref - defined in clock wiz
@@ -47,34 +29,6 @@ set_property IOSTANDARD LVCMOS18 [get_ports SFP_LOS]
 # GPIO Button for reset
 set_property PACKAGE_PIN AE10    [get_ports CPU_RESET]
 set_property IOSTANDARD LVCMOS18 [get_ports CPU_RESET]
-
-# GPIO LEDS
-set_property PACKAGE_PIN AP8     [get_ports GPIO_LED[0]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[0]]
-set_property PACKAGE_PIN H23     [get_ports GPIO_LED[1]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[1]]
-set_property PACKAGE_PIN P20     [get_ports GPIO_LED[2]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[2]]
-set_property PACKAGE_PIN P21     [get_ports GPIO_LED[3]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[3]]
-set_property PACKAGE_PIN N22     [get_ports GPIO_LED[4]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[4]]
-set_property PACKAGE_PIN M22     [get_ports GPIO_LED[5]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[5]]
-set_property PACKAGE_PIN R23     [get_ports GPIO_LED[6]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[6]]
-set_property PACKAGE_PIN P23     [get_ports GPIO_LED[7]]
-set_property IOSTANDARD LVCMOS18 [get_ports GPIO_LED[7]]
-
-# GPIO SW
-set_property PACKAGE_PIN AN16    [get_ports GPIO_DIP_SW[0]]
-set_property IOSTANDARD LVCMOS12 [get_ports GPIO_DIP_SW[0]]
-set_property PACKAGE_PIN AN19    [get_ports GPIO_DIP_SW[1]]
-set_property IOSTANDARD LVCMOS12 [get_ports GPIO_DIP_SW[1]]
-set_property PACKAGE_PIN AP18    [get_ports GPIO_DIP_SW[2]]
-set_property IOSTANDARD LVCMOS12 [get_ports GPIO_DIP_SW[2]]
-set_property PACKAGE_PIN AN14    [get_ports GPIO_DIP_SW[3]]
-set_property IOSTANDARD LVCMOS12 [get_ports GPIO_DIP_SW[3]]
 
 # UART
 # Bank  95 VCCO -          - IO_L3P_T0L_N4_AD15P_A26_65

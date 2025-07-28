@@ -45,9 +45,7 @@ entity top_demo_uoe is
     SFP_RX_P     : in  std_logic;
     SFP_LOS      : in  std_logic;
     UART_RX      : in  std_logic;
-    UART_TX      : out std_logic;
-    GPIO_LED     : out std_logic_vector(7 downto 0);
-    GPIO_DIP_SW  : in  std_logic_vector(3 downto 0)
+    UART_TX      : out std_logic
   );
 end top_demo_uoe;
 
@@ -307,7 +305,7 @@ architecture rtl of top_demo_uoe is
   signal sys_rst_n : std_logic;
 
   -- Board ID
-  signal board_id : std_logic_vector(3 downto 0);
+  signal board_id : std_logic_vector(3 downto 0) := "0000";
 
   -- PCS PMA from/to UOE
   signal axis_rx_aclk   : std_logic_vector(1 downto 0);
@@ -343,10 +341,10 @@ architecture rtl of top_demo_uoe is
   signal axis_tx_1g_tready : std_logic;
 
   -- PCS/PMA Debug
-  signal sfp_mod_def0       : std_logic_vector(1 downto 0);
+  signal sfp_mod_def0       : std_logic_vector(1 downto 0) := "00";
   signal phy_layer_ready    : std_logic_vector(1 downto 0);
   signal status_vector_sfp  : std_logic_vector(31 downto 0);
-  signal dbg_loopback_en    : std_logic;
+  signal dbg_loopback_en    : std_logic := '0';
   signal dbg_clk_phy_active : std_logic_vector(1 downto 0);
   signal locked             : std_logic;
 
@@ -819,19 +817,4 @@ begin
       UOE_1G_TARGET_IP  => reg_uoe_1g_target_ip,
       UOE_1G_PORT_SRC   => reg_uoe_1g_port_src
     );
-
-  -------------------------------------------------------------------------------
-  -- Debug
-  -------------------------------------------------------------------------------
-
-  board_id <= "000" & GPIO_DIP_SW(3);
-
-  dbg_loopback_en <= GPIO_DIP_SW(0);
-  sfp_mod_def0    <= GPIO_DIP_SW(2 downto 1);
-
-  GPIO_LED(1 downto 0) <= interrupt_1g;-- or interrupt_10g; --dbg_clk_phy_active;
-  GPIO_LED(3 downto 2) <= phy_layer_ready;
-  GPIO_LED(5 downto 4) <= sfp_mod_def0 or SFP_LOS;
-  GPIO_LED(6)          <= dbg_loopback_en;
-  GPIO_LED(7)          <= locked;
 end rtl;
