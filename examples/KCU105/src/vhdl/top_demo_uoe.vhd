@@ -25,9 +25,7 @@ entity top_demo_uoe is
     SFP_TX_P     : out std_logic;
     SFP_RX_N     : in  std_logic;
     SFP_RX_P     : in  std_logic;
-    SFP_LOS      : in  std_logic;
-    UART_RX      : in  std_logic;
-    UART_TX      : out std_logic
+    SFP_LOS      : in  std_logic
   );
 end top_demo_uoe;
 
@@ -189,32 +187,6 @@ architecture rtl of top_demo_uoe is
     );
   end component clk_wiz_design;
 
-  component jtag_axi is                 --@suppress Xilinx IP
-    port(
-      aclk          : in  std_logic;
-      aresetn       : in  std_logic;
-      m_axi_awaddr  : out std_logic_vector(31 downto 0);
-      m_axi_awprot  : out std_logic_vector(2 downto 0);
-      m_axi_awvalid : out std_logic;
-      m_axi_awready : in  std_logic;
-      m_axi_wdata   : out std_logic_vector(31 downto 0);
-      m_axi_wstrb   : out std_logic_vector(3 downto 0);
-      m_axi_wvalid  : out std_logic;
-      m_axi_wready  : in  std_logic;
-      m_axi_bresp   : in  std_logic_vector(1 downto 0);
-      m_axi_bvalid  : in  std_logic;
-      m_axi_bready  : out std_logic;
-      m_axi_araddr  : out std_logic_vector(31 downto 0);
-      m_axi_arprot  : out std_logic_vector(2 downto 0);
-      m_axi_arvalid : out std_logic;
-      m_axi_arready : in  std_logic;
-      m_axi_rdata   : in  std_logic_vector(31 downto 0);
-      m_axi_rresp   : in  std_logic_vector(1 downto 0);
-      m_axi_rvalid  : in  std_logic;
-      m_axi_rready  : out std_logic
-    );
-  end component jtag_axi;
-
   component main_demo_registers_itf
     port(
       S_AXI_ACLK        : in  std_logic;
@@ -259,11 +231,10 @@ architecture rtl of top_demo_uoe is
   constant C_AXI_DATA_WIDTH : integer := 32;
   constant C_AXI_STRB_WIDTH : integer := C_AXI_DATA_WIDTH / 8;
 
-  constant C_NB_MASTER : integer := 2;
+  constant C_NB_MASTER : integer := 1;
   constant C_NB_SLAVE  : integer := 3;
 
-  constant C_IDX_MASTER_JTAG2AXI : integer := 0;
-  constant C_IDX_MASTER_UART     : integer := 1;
+  constant C_IDX_MASTER_PS       : integer := 0;
 
   constant C_IDX_SLAVE_UOE_1G    : integer := 1;
   constant C_IDX_SLAVE_MAIN_REGS : integer := 2;
@@ -334,8 +305,6 @@ architecture rtl of top_demo_uoe is
 
   -- Switch Input
   -- 0 => JTAG to AXI output, 1 => Uart
-  signal axi_jtag2axi_awaddr : std_logic_vector(31 downto 0);
-  signal axi_jtag2axi_araddr : std_logic_vector(31 downto 0);
 
   signal axi_switch_in_awaddr  : std_logic_vector((C_NB_MASTER * C_AXI_ADDR_WIDTH) - 1 downto 0);
   signal axi_switch_in_awvalid : std_logic_vector(C_NB_MASTER - 1 downto 0);
@@ -376,9 +345,6 @@ architecture rtl of top_demo_uoe is
   signal axi_switch_out_rready  : std_logic_vector(C_NB_SLAVE - 1 downto 0);
 
   -- Registers
-  signal reg_uoe_10g_target_ip : std_logic_vector(31 downto 0);
-  signal reg_uoe_10g_port_src  : std_logic_vector(15 downto 0);
-  signal reg_uoe_10g_port_dest : std_logic_vector(15 downto 0);
   signal reg_uoe_1g_target_ip  : std_logic_vector(31 downto 0);
   signal reg_uoe_1g_port_src   : std_logic_vector(15 downto 0);
   signal reg_uoe_1g_port_dest  : std_logic_vector(15 downto 0);
@@ -559,38 +525,6 @@ begin
     );
 
   -------------------------------------------------------------------------------
-  -- JTAG2AXI
-  -------------------------------------------------------------------------------
-
-  inst_jtag_axi : component jtag_axi
-    port map(
-      aclk          => sys_clk,
-      aresetn       => sys_rst_n,
-      m_axi_awaddr  => axi_jtag2axi_awaddr,
-      m_axi_awprot  => open,
-      m_axi_awvalid => axi_switch_in_awvalid(C_IDX_MASTER_JTAG2AXI),
-      m_axi_awready => axi_switch_in_awready(C_IDX_MASTER_JTAG2AXI),
-      m_axi_wdata   => axi_switch_in_wdata((C_IDX_MASTER_JTAG2AXI * C_AXI_DATA_WIDTH) + 31 downto (C_IDX_MASTER_JTAG2AXI * C_AXI_DATA_WIDTH)),
-      m_axi_wstrb   => axi_switch_in_wstrb((C_IDX_MASTER_JTAG2AXI * C_AXI_STRB_WIDTH) + 3 downto (C_IDX_MASTER_JTAG2AXI * C_AXI_STRB_WIDTH)),
-      m_axi_wvalid  => axi_switch_in_wvalid(C_IDX_MASTER_JTAG2AXI),
-      m_axi_wready  => axi_switch_in_wready(C_IDX_MASTER_JTAG2AXI),
-      m_axi_bresp   => axi_switch_in_bresp((C_IDX_MASTER_JTAG2AXI * 2) + 1 downto (C_IDX_MASTER_JTAG2AXI * 2)),
-      m_axi_bvalid  => axi_switch_in_bvalid(C_IDX_MASTER_JTAG2AXI),
-      m_axi_bready  => axi_switch_in_bready(C_IDX_MASTER_JTAG2AXI),
-      m_axi_araddr  => axi_jtag2axi_araddr,
-      m_axi_arprot  => open,
-      m_axi_arvalid => axi_switch_in_arvalid(C_IDX_MASTER_JTAG2AXI),
-      m_axi_arready => axi_switch_in_arready(C_IDX_MASTER_JTAG2AXI),
-      m_axi_rdata   => axi_switch_in_rdata((C_IDX_MASTER_JTAG2AXI * C_AXI_DATA_WIDTH) + 31 downto (C_IDX_MASTER_JTAG2AXI * C_AXI_DATA_WIDTH)),
-      m_axi_rresp   => axi_switch_in_rresp((C_IDX_MASTER_JTAG2AXI * 2) + 1 downto (C_IDX_MASTER_JTAG2AXI * 2)),
-      m_axi_rvalid  => axi_switch_in_rvalid(C_IDX_MASTER_JTAG2AXI),
-      m_axi_rready  => axi_switch_in_rready(C_IDX_MASTER_JTAG2AXI)
-    );
-
-  axi_switch_in_awaddr((C_IDX_MASTER_JTAG2AXI * C_AXI_ADDR_WIDTH) + 15 downto (C_IDX_MASTER_JTAG2AXI * C_AXI_ADDR_WIDTH)) <= axi_jtag2axi_awaddr(15 downto 0);
-  axi_switch_in_araddr((C_IDX_MASTER_JTAG2AXI * C_AXI_ADDR_WIDTH) + 15 downto (C_IDX_MASTER_JTAG2AXI * C_AXI_ADDR_WIDTH)) <= axi_jtag2axi_araddr(15 downto 0);
-
-  -------------------------------------------------------------------------------
   -- Switch
   -------------------------------------------------------------------------------
 
@@ -679,8 +613,8 @@ begin
       REVISION          => C_DEMO_REVISION,
       DEBUG             => C_DEMO_DEBUG,
       BOARD_ID          => board_id,
-      UOE_10G_TARGET_IP => reg_uoe_10g_target_ip,
-      UOE_10G_PORT_SRC  => reg_uoe_10g_port_src,
+      UOE_10G_TARGET_IP => open,
+      UOE_10G_PORT_SRC  => open,
       UOE_1G_TARGET_IP  => reg_uoe_1g_target_ip,
       UOE_1G_PORT_SRC   => reg_uoe_1g_port_src
     );
